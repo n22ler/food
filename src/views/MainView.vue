@@ -1,31 +1,40 @@
 <template>
     <div class="main">
         <div class="main__content">
-            <SelectUI
-                v-model="selectCategory"
-                :options="getCategory()"
-                @change="goZeroSub()"
-            />
-            <p v-if="selectCategory!=0"></p>
-            <SelectUI
-                v-if="selectCategory!=0"
-                v-model="selectSubtype"
-                :options="getSubtype()"
-                @change="goZeroProd()"
-            />
-            <p v-if="selectSubtype!=0 && selectCategory!=0"></p>
-            <SelectUI
-                v-if="selectSubtype!=0 && selectCategory!=0"
-                v-model="selectProduct"
-                :options="getProduct()"
+            <div class="main__select">
+                <SelectUI
+                    v-model="selectCategory"
+                    :options="getCategory()"
+                    @change="goZeroSub()"
+                />
+                <p v-if="selectCategory!=0"></p>
+                <SelectUI
+                    v-if="selectCategory!=0"
+                    v-model="selectSubtype"
+                    :options="getSubtype()"
+                    @change="goZeroProd()"
+                />
+                <p v-if="selectSubtype!=0 && selectCategory!=0"></p>
+                <SelectUI
+                    v-if="selectSubtype!=0 && selectCategory!=0"
+                    v-model="selectProduct"
+                    :options="getProduct()"
+                    @change="takeProd()"
+                />
+            </div>
+            <CalcForm
+                v-if="selectProduct!=0 && selectSubtype!=0"
+                :prod="currentProd"
             />
         </div>
+
     </div>
 </template>
 
 <script>
 import SelectUI from '@/components/UI/SelectUI.vue';
 import axios from 'axios';
+import CalcForm from '@/components/CalcForm.vue';
     export default {
         data(){
             return{
@@ -35,6 +44,7 @@ import axios from 'axios';
                 selectSubtypeArray:[],
                 selectProduct:'',
                 selectProductArray:[],
+                currentProd:[]
             }
         },
         methods: {
@@ -89,6 +99,16 @@ import axios from 'axios';
             goZeroProd(){
                 this.selectProduct = '0'
             },
+            takeProd(){
+                console.log('one')
+                this.currentProd = []
+                this.selectProductArray.forEach(prod=>{
+                    if(this.selectProduct == prod.id)
+                        this.currentProd.push(prod)
+                        console.log('two')
+                })
+                console.log(this.currentProd)
+            },
             getCategory() {
                 let a =[]
                 a.unshift({
@@ -129,34 +149,42 @@ import axios from 'axios';
         },
         watch:{
         },
-        components: { SelectUI }
+        components: { SelectUI, CalcForm }
 }
 </script>
 
 <style lang="scss" scoped>
 .main{
+    display: flex;
+    flex-direction: row;
     overflow: hidden;
     transition: 1s;
 }
-
 .main__content{
-    display: flex;
-    margin: auto;
-    flex-direction: column;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+}
+.main__select{
+    display: flex;
+    flex-direction: column;
     border: 2px solid $mainOne;
     padding: 25px;
-    height: fit-content;
     background: $back;
-    -webkit-animation: slide-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-            animation: slide-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    -webkit-animation: slide-bottom-px 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+            animation: slide-bottom-px 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
-.main__content:hover{
+.main__select:hover{
     border: 2px solid $accentTwo;
+}
+.main__calc{
+    width: 400px;
+    height: 500px;
+    border: 1px solid red
 }
 p{
     padding: 10px;

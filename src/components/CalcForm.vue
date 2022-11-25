@@ -1,0 +1,134 @@
+<template>
+    <div class="form">
+        <h3>{{prod[0].rus_name}}</h3>
+        <span>Характеристики, 100г:</span>
+        <p>Калории: <span>{{currentArray.calories}}</span></p>
+        <p>Белки: <span>{{currentArray.protein}}</span></p>
+        <p>Жиры: <span>{{currentArray.fat}}</span></p>
+        <p>Углеводы: <span>{{currentArray.carbo}}</span></p>
+        <div class="">
+            <label for="value">Введите вес, г:</label>
+                <div class="form__post">
+                    <input type="text" name="value">
+                    <p></p>
+                    <button>Записать</button>
+                </div>
+        </div>
+        
+    </div>
+</template>
+
+<script>
+    export default {
+        props:{
+            prod:{
+               type:Array,
+               required:true, 
+            }
+        },
+        data(){
+            return{
+                currentArray:{},
+            }
+        },
+        methods:{
+            changeTypeValue(){
+                this.currentArray['calories'] = ((parseFloat((this.prod[0].calories).replace(',','.')))*100).toFixed(1)
+                this.currentArray['fat'] = ((parseFloat((this.prod[0].fat).replace(',','.')))*100).toFixed(1)
+                this.currentArray['protein'] = ((parseFloat((this.prod[0].protein).replace(',','.')))*100).toFixed(1)
+                this.currentArray['carbo'] = ((parseFloat((this.prod[0].carbo).replace(',','.')))*100).toFixed(1)
+            }
+        },
+        mounted(){
+            this.changeTypeValue();
+        },
+        watch:{
+            prod(){
+                this.changeTypeValue();
+            },
+        }
+        
+    }
+</script>
+
+<style lang="scss" scoped>
+.form{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid $mainOne;
+    padding: 25px;
+    color: $accentOne;
+    background: $back;
+    -webkit-animation: slide-bottom-px 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+            animation: slide-bottom-px 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+.form:hover{
+    border: 2px solid $accentTwo;
+}
+p{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+p>span{
+    font-weight: 700;
+    color:$mainTwo
+}
+h3{
+    font-weight: 700;
+    color:$mainTwo;
+    text-align:center;
+    margin-bottom: 10px;
+}
+input{
+    border: 1px solid;
+    width: 150px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 2px solid $mainOne;
+    color: $back;
+    transition: 0.5s;
+}
+input:focus-visible{
+    outline: 1px solid $accentTwo;;
+    border: 2px solid $accentTwo;
+    border-radius: 30px;
+    transition: 0.3s;
+    padding: 10px 20px;
+}
+input:hover{
+    outline: 1px solid $accentTwo;;
+    border: 2px solid $accentTwo;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+label{
+    font-size: 14px;
+    font-weight: 500;
+    color: $accentOne;
+}
+.form>div{margin-top: 15px;}
+.form__post>p{
+    padding: 5px;
+}
+.form__post{
+    display: flex;
+    align-items: center;
+    margin-top: 5px;}
+button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: $mainOne;
+    color: $accentOne;
+    transition: 0.5s;
+    font-size: 14px;
+}
+button:hover{
+    border-radius: 30px;
+    transition: 0.3s;
+    background: $accentTwo;
+    color:$mainOne;
+}
+</style>

@@ -1,20 +1,55 @@
 <template>
     <div class="auth">
-        <form class="auth__form" action="post">
-            <label for="mail">Введите E-mail</label>
-            <input type="email" name="mail"/>
+        <form class="auth__form" @submit.prevent>
+            <!-- <span class="errors" style="margin-bottom:10px; max-width:300px" v-if="errors.non_field_errors!=null">Не совпадают Логин И пароль</span> -->
+            <label for="mail">Введите Логин</label>
+            <input
+                :model-value="login"
+                @update:model-value="setLogin"
+                type="email"
+                name="mail">
             <label for="pass">Введите пароль</label>
-            <input type="password" name="pass" id="">
+            <input
+                :model-value="password"
+                @update:model-value="setPassword"
+                type="password"
+                name="pass"
+                >
             <a @click="$router.push('/registration')">Зарегистрироваться</a>
-            <button type="submit">Войти</button>
+            <button @click="goLogin" type="submit">Войти</button>
         </form>
     </div>
 </template>
 
 <script>
+import {mapActions,mapGetters,mapMutations,mapState} from 'vuex'
     export default {
-        
-    
+        data(){
+            return{
+
+            }
+        },
+        methods:{
+            ...mapMutations({
+                setLogin: 'auth/setLogin',
+                setPassword: 'auth/setPassword'
+            }),
+            ...mapActions({
+                goLogin: 'auth/goLogin'
+            })
+        },
+        computed:{
+            ...mapState({
+                isAuth: 'auth/isAuth',
+                login: 'auth/login',
+                password: 'auth/password',
+                errors: 'auth/errors',
+                token: 'auth/token'
+            }),
+            ...mapGetters({
+
+            })
+        }
     }
 </script>
 
@@ -22,6 +57,11 @@
 .auth{
     overflow: hidden;
     transition: 1s;
+
+}
+.errors{
+    font-weight: 600;
+    color:$mainTwo
 
 }
 .auth__form{
@@ -46,7 +86,6 @@ label{
     font-size: 12px;
     font-weight: 500;
     color: $accentOne;
-    
 }
 label:nth-child(odd){
     margin-top: 15px;

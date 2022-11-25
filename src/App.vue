@@ -25,13 +25,13 @@ export default {
 				}
 				},
 				"color": {
-				"value": "#ffffff"
+				"value": "#0079C2"
 				},
 				"shape": {
 				"type": "circle",
 				"stroke": {
 					"width": 0,
-					"color": "#000000"
+					"color": "#0079C2"
 				},
 				"polygon": {
 					"nb_sides": 5
@@ -65,7 +65,7 @@ export default {
 				"line_linked": {
 				"enable": true,
 				"distance": 150,
-				"color": `#ffffff`,
+				"color": `#0079C2`,
 				"opacity": 0.4,
 				"width": 1
 				},

@@ -1,20 +1,47 @@
 <template>
     <div class="auth">
-        <form class="auth__form" action="post">
-            <label for="nickname">Укажите Имя</label>
-            <input type="text" name="nickname">
-            <label for="mail">Укажите E-mail</label>
-            <input type="email" name="mail">
-            <label for="pass">Задайте пароль</label>
-            <input type="password" name="pass">
-            <button type="submit">Войти</button>
+        <form class="auth__form" @submit.prevent>
+            <label v-if="this.errors?.username == null" for="nickname">Укажите Логин</label>
+            <label v-if="this.errors?.username != null" class="errors" for="mail">{{this.errors?.username[0]}}</label>
+            <input v-model="username" type="text" name="nickname">
+            <label v-if="this.errors?.email == null" for="mail">Укажите E-mail</label>
+            <label v-if="this.errors?.email != null" class="errors" for="mail">{{this.errors?.email[0]}}</label>
+            <input v-model="email" type="email" name="mail">
+            <label v-if="this.errors?.password == null" for="pass">Задайте пароль</label>
+            <label v-if="this.errors?.password != null" class="errors" for="pass">{{this.errors?.password[0]}}</label>
+            <input v-model="password" type="password" name="pass">
+            <button @click="goRegister">Войти</button>
         </form>
     </div>
 </template>
 
 <script>
     export default {
-        
+        data(){
+            return{
+                username:"",
+                password:"",
+                email:"",
+                errors:{},
+            }
+        },
+        methods:{
+            async goRegister(){
+                const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ "username": this.username,
+                                        "email": this.email,
+                                        "password": this.password
+                })
+            };
+            const response = await fetch("http://127.0.0.1:8000/api/auth/users/", requestOptions);
+            this.errors= await response.json();
+            if(response.status ==201){
+                console.log('чет куда-то ушло') //редирект на логин
+            }
+            }
+        }
     }
 </script>
 
@@ -22,6 +49,10 @@
 .auth{
     overflow: hidden;
     transition: 1s;
+}
+.errors{
+    font-weight: 600;
+    color:$mainTwo
 }
 .auth__form{
     display: flex;
@@ -45,7 +76,7 @@ label{
     font-size: 12px;
     font-weight: 500;
     color: $accentOne;
-    
+    max-width: 300px;
 }
 label:nth-child(odd){
     margin-top: 15px;
