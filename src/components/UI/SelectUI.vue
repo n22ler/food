@@ -103,17 +103,4 @@
 .active {
     border:1px solid $accentTwo;
 }
-input{
-
-}
-input:focus-visible{
-    outline: 1px solid $accentTwo;;
-    border: 2px solid $accentTwo;
-    border-radius: 30px;
-    transition: 0.3s;
-    padding: 10px 20px;
-}
-input:hover{
-
-}
 </style>
