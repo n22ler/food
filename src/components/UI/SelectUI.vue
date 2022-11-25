@@ -52,6 +52,11 @@
     padding: 16px 32px;
     background: $back;
     color: $accentOne;
+    border: 1px solid;
+    width: 250px;
+    border-radius: 5px;
+    transition: 0.5s;
+    appearance: none;
 }
 .select::-ms-expand{
     display: none;
@@ -62,9 +67,9 @@
     border: 1px solid $accentOne;
     position: absolute;
     top: 50%;
-    right: 5px;
+    right: 10px;
     transform: translate(0,-50%);
-    border-radius: 50px;
+    border-radius: 5px;
     background: $back;
     pointer-events: none; 
 }
@@ -74,11 +79,16 @@
     position: relative;
 }
 .select:hover{
-    border:1px solid $accentTwo;
+    outline: 1px solid $accentTwo;;
+    border: 1px solid $accentTwo;
+    border-radius: 30px;
+    transition: 0.3s;
 }
 .select:hover~.btn{
     background: $accentTwo;
     border:1px solid $accentTwo;
+    border-radius: 50px;
+    transition: 0.3s;
 }
 .btn>svg{
     fill:$accentOne;
@@ -92,5 +102,18 @@
 }
 .active {
     border:1px solid $accentTwo;
+}
+input{
+
+}
+input:focus-visible{
+    outline: 1px solid $accentTwo;;
+    border: 2px solid $accentTwo;
+    border-radius: 30px;
+    transition: 0.3s;
+    padding: 10px 20px;
+}
+input:hover{
+
 }
 </style>

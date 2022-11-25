@@ -151,6 +151,8 @@ import axios from 'axios';
     padding: 25px;
     height: fit-content;
     background: $back;
+    -webkit-animation: slide-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+            animation: slide-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
 .main__content:hover{
@@ -159,4 +161,8 @@ import axios from 'axios';
 p{
     padding: 10px;
 }
+
+
+ 
+
 </style>

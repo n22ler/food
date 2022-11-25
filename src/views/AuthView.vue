@@ -22,6 +22,7 @@
 .auth{
     overflow: hidden;
     transition: 1s;
+
 }
 .auth__form{
     display: flex;
@@ -30,11 +31,13 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     border: 2px solid $mainOne;
     padding: 25px;
     height: fit-content;
     background: $back;
+    -webkit-animation: slide-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+            animation: slide-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    
 }
 .auth__form:hover{
     border: 2px solid $accentTwo;
@@ -80,7 +83,7 @@ input{
     padding: 10px 20px;
     border-radius: 5px;
     border: 2px solid $mainOne;
-    color: $mainTwo;
+    color: $back;
     transition: 0.5s;
 }
 input:focus-visible{
@@ -96,5 +99,4 @@ input:hover{
     border-radius: 30px;
     transition: 0.3s;
 }
-
 </style>

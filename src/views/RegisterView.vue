@@ -35,6 +35,8 @@
     padding: 25px;
     height: fit-content;
     background: $back;
+    -webkit-animation: slide-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+            animation: slide-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 .auth__form:hover{
     border: 2px solid $accentTwo;
@@ -71,7 +73,7 @@ input{
     padding: 10px 20px;
     border-radius: 5px;
     border: 2px solid $mainOne;
-    color: $mainTwo;
+    color: $back;
     transition: 0.5s;
 }
 input:focus-visible{
