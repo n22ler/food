@@ -11,11 +11,13 @@
             <label v-if="this.errors?.password != null" class="errors" for="pass">{{this.errors?.password[0]}}</label>
             <input v-model="password" type="password" name="pass">
             <button @click="goRegister">Войти</button>
+            <!-- Сделать попап об активации email -->
         </form>
     </div>
 </template>
 
 <script>
+import router from "@/router"
     export default {
         data(){
             return{
@@ -35,10 +37,10 @@
                                         "password": this.password
                 })
             };
-            const response = await fetch("http://127.0.0.1:8000/api/auth/users/", requestOptions);
+            const response = await fetch("http://"+process.env.VUE_APP_API+":8000/api/auth/users/", requestOptions);
             this.errors= await response.json();
             if(response.status ==201){
-                console.log('чет куда-то ушло') //редирект на логин
+                router.push('/')
             }
             }
         }
@@ -55,6 +57,7 @@
     color:$mainTwo
 }
 .auth__form{
+    border-radius: 5px;
     display: flex;
     margin: auto;
     flex-direction: column;
@@ -63,7 +66,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border: 2px solid $mainOne;
-    padding: 25px;
+    padding: 10px 25px 25px 25px;
     height: fit-content;
     background: $back;
     -webkit-animation: slide-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
@@ -71,6 +74,7 @@
 }
 .auth__form:hover{
     border: 2px solid $accentTwo;
+    transition: 0.5s;
 }
 label{
     font-size: 12px;

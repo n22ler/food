@@ -7,7 +7,7 @@
             <div class="navbar__btns">
                 <ButtonUI @click="$router.push('/auth')">Профиль</ButtonUI>
                 <ButtonUI @click="$router.push('/')">Калькулятор</ButtonUI>
-                <ButtonUI @click="$router.push('/report')">Статистика</ButtonUI>
+                <ButtonUI @click="$router.push('/profile')">Статистика</ButtonUI>
             </div>
         </div>
     </div>
@@ -35,6 +35,7 @@ import ButtonUI from './ButtonUI.vue';
 .navbar:hover{
     border: 2px solid $mainTwo;
     border-top: none;
+    transition: 0.5s;
 }
 .navbar__btns{
     margin-left: auto;

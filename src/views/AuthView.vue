@@ -1,17 +1,19 @@
 <template>
     <div class="auth">
         <form class="auth__form" @submit.prevent>
-            <!-- <span class="errors" style="margin-bottom:10px; max-width:300px" v-if="errors.non_field_errors!=null">Не совпадают Логин И пароль</span> -->
-            <label for="mail">Введите Логин</label>
+            <span class="errors" style="margin-bottom:10px; max-width:300px" v-if="$store.state.auth.errors.non_field_errors!=undefined">{{$store.state.auth.errors.non_field_errors[0]}}</span>
+            <label v-if="$store.state.auth.errors.username!=null" class="errors" for="mail">{{$store.state.auth.errors.username[0]}}</label>
+            <label v-else for="mail">Введите Логин</label>
             <input
-                :model-value="login"
-                @update:model-value="setLogin"
-                type="email"
+                :v-model="login"
+                @change="setLogin"
+                type="text"
                 name="mail">
-            <label for="pass">Введите пароль</label>
+            <label style="margin-top:15px" v-if="$store.state.auth.errors.password!=null" class="errors" for="mail">{{$store.state.auth.errors.password[0]}}</label>
+            <label style="margin-top:15px" v-else for="pass">Введите пароль</label>
             <input
-                :model-value="password"
-                @update:model-value="setPassword"
+                :v-model="password"
+                @change="setPassword"
                 type="password"
                 name="pass"
                 >
@@ -22,7 +24,7 @@
 </template>
 
 <script>
-import {mapActions,mapGetters,mapMutations,mapState} from 'vuex'
+import {mapActions,mapMutations,mapState} from 'vuex'
     export default {
         data(){
             return{
@@ -36,21 +38,18 @@ import {mapActions,mapGetters,mapMutations,mapState} from 'vuex'
             }),
             ...mapActions({
                 goLogin: 'auth/goLogin'
-            })
+            }),
         },
         computed:{
             ...mapState({
-                isAuth: 'auth/isAuth',
+                isAuth: 'isAuth',
                 login: 'auth/login',
                 password: 'auth/password',
-                errors: 'auth/errors',
+                erorrs: 'auth/errors',
                 token: 'auth/token'
             }),
-            ...mapGetters({
-
-            })
         }
-    }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -61,8 +60,7 @@ import {mapActions,mapGetters,mapMutations,mapState} from 'vuex'
 }
 .errors{
     font-weight: 600;
-    color:$mainTwo
-
+    color:$mainTwo;
 }
 .auth__form{
     display: flex;
@@ -71,8 +69,9 @@ import {mapActions,mapGetters,mapMutations,mapState} from 'vuex'
     position: absolute;
     top: 50%;
     left: 50%;
+    border-radius: 5px;
     border: 2px solid $mainOne;
-    padding: 25px;
+    padding: 10px 25px 25px 25px;
     height: fit-content;
     background: $back;
     -webkit-animation: slide-bottom 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
@@ -81,6 +80,7 @@ import {mapActions,mapGetters,mapMutations,mapState} from 'vuex'
 }
 .auth__form:hover{
     border: 2px solid $accentTwo;
+    transition: 0.5s;
 }
 label{
     font-size: 12px;

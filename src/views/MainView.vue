@@ -32,9 +32,11 @@
 </template>
 
 <script>
+
 import SelectUI from '@/components/UI/SelectUI.vue';
 import axios from 'axios';
 import CalcForm from '@/components/CalcForm.vue';
+import store from '@/store';
     export default {
         data(){
             return{
@@ -44,13 +46,18 @@ import CalcForm from '@/components/CalcForm.vue';
                 selectSubtypeArray:[],
                 selectProduct:'',
                 selectProductArray:[],
-                currentProd:[]
+                currentProd:[],
+                token: store.getters['auth/getToken']
             }
         },
         methods: {
             async fetchProd() { //вынести в компонент VueX
                 try {
-                    const response = await axios.get("http://127.0.0.1:8000/api/products/");
+                    const requestOptions = {
+                        method: "GET",
+                        headers: { "Content-Type": "application/json", 'Authorization': "Token "+this.token },
+        };
+                    const response = await axios.get("http://"+process.env.VUE_APP_API+":8000/api/products/", requestOptions);
                     this.selectProductArray = [...response.data];
                 }
                 catch (e) {
@@ -59,7 +66,11 @@ import CalcForm from '@/components/CalcForm.vue';
             },
             async fetchCat() { //вынести в компонент VueX
                 try {
-                    const response = await axios.get("http://127.0.0.1:8000/api/category/");
+                    const requestOptions = {
+                        method: "GET",
+                        headers: { "Content-Type": "application/json", 'Authorization': "Token "+this.token },
+                    };
+                    const response = await axios.get("http://"+process.env.VUE_APP_API+":8000/api/category/",requestOptions);
                     this.selectCategoryArray = [...response.data];
                     this.selectCategoryArray.unshift({
                         id: '0',
@@ -72,7 +83,11 @@ import CalcForm from '@/components/CalcForm.vue';
             },
             async fetchSub() { //вынести в компонент VueX
                 try {
-                    const response = await axios.get("http://127.0.0.1:8000/api/subtype/");
+                    const requestOptions = {
+                        method: "GET",
+                        headers: { "Content-Type": "application/json", 'Authorization': "Token "+this.token },
+                    };
+                    const response = await axios.get("http://"+process.env.VUE_APP_API+":8000/api/subtype/",requestOptions);
                     this.selectSubtypeArray = [...response.data];
                     
                 }
@@ -80,19 +95,6 @@ import CalcForm from '@/components/CalcForm.vue';
                     alert("Не отрабатывает");
                 }
             },
-            // getCurrentValue(array, field, selector){
-            //     const a=[]
-            //     a.unshift({
-            //             id: '0',
-            //             rus_name: 'Выберите из списка'
-            //         })
-            //     array.forEach(item=>{
-            //         if(selector == item[{field}])
-            //             a.push(item)
-            //     })
-            //     this.selectProduct = '0'
-            //     return a
-            // },
             goZeroSub(){
                 this.selectSubtype = '0'
             },
@@ -100,14 +102,11 @@ import CalcForm from '@/components/CalcForm.vue';
                 this.selectProduct = '0'
             },
             takeProd(){
-                console.log('one')
                 this.currentProd = []
                 this.selectProductArray.forEach(prod=>{
                     if(this.selectProduct == prod.id)
                         this.currentProd.push(prod)
-                        console.log('two')
                 })
-                console.log(this.currentProd)
             },
             getCategory() {
                 let a =[]
@@ -147,8 +146,6 @@ import CalcForm from '@/components/CalcForm.vue';
             this.fetchSub();
             this.fetchProd();
         },
-        watch:{
-        },
         components: { SelectUI, CalcForm }
 }
 </script>
@@ -174,12 +171,14 @@ import CalcForm from '@/components/CalcForm.vue';
     border: 2px solid $mainOne;
     padding: 25px;
     background: $back;
+    border-radius: 5px;
     -webkit-animation: slide-bottom-px 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
             animation: slide-bottom-px 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
 .main__select:hover{
     border: 2px solid $accentTwo;
+    transition: 0.5s;
 }
 .main__calc{
     width: 400px;
