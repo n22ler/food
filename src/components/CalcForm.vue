@@ -74,6 +74,7 @@ import store from '@/store'
     border-radius: 5px;
     color: $accentOne;
     background: $back;
+    transition: 0.5s;
     -webkit-animation: slide-bottom-px 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
             animation: slide-bottom-px 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
