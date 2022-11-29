@@ -15,7 +15,7 @@
 <script>
 import ButtonUI from '@/components/UI/ButtonUI.vue';
 import store from '@/store';
-import axios from 'axios'
+import axios from 'axios';
 import { mapActions} from 'vuex';
     export default {
     data() {
@@ -33,6 +33,7 @@ import { mapActions} from 'vuex';
                 };
                 const response = await axios.get("http://" + process.env.VUE_APP_API + ":8000/api/auth/users/me/", requestOptions);
                 this.profile = response.data;
+                store.commit('auth/setUserId', this.profile.id)
             }
             catch (e) {
                 alert("Не отрабатывает");

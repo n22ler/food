@@ -4,6 +4,7 @@ export const LoginModule = {
     state:()=>({
         login:'',
         password:'',
+        userId:null,
         errors:[],
         token:localStorage.getItem('token')|| null,
         isAuth:localStorage.token|| false,
@@ -34,7 +35,9 @@ export const LoginModule = {
         deleteToken(state, event){
             state.token = event
         },
-        
+        setUserId(state, event){
+            state.userId = event
+        }
     },
     actions:{
         async goLogin({state, commit}){
@@ -51,6 +54,7 @@ export const LoginModule = {
         commit('setErrors', await response.json())
 
             if(response.status ==200){
+                console.log(response)
                 localStorage.token = state.errors.auth_token
                 commit('setToken', state.errors.auth_token)
                 localStorage.isAuth = true

@@ -9,9 +9,13 @@
         <div class="">
             <label for="value">Введите вес, г:</label>
                 <div class="form__post">
-                    <input type="text" name="value">
+                    <input
+                        v-model="currentValue"
+                        type="text"
+                        name="value"
+                        >
                     <p></p>
-                    <button>Записать</button>
+                    <button @click="pushData">Записать</button>
                 </div>
         </div>
         
@@ -19,6 +23,7 @@
 </template>
 
 <script>
+import store from '@/store'
     export default {
         props:{
             prod:{
@@ -29,6 +34,7 @@
         data(){
             return{
                 currentArray:{},
+                currentValue: null
             }
         },
         methods:{
@@ -37,7 +43,12 @@
                 this.currentArray['fat'] = ((parseFloat((this.prod[0].fat).replace(',','.')))*100).toFixed(1)
                 this.currentArray['protein'] = ((parseFloat((this.prod[0].protein).replace(',','.')))*100).toFixed(1)
                 this.currentArray['carbo'] = ((parseFloat((this.prod[0].carbo).replace(',','.')))*100).toFixed(1)
-            }
+            },
+            pushData(){
+                console.log(store.state.auth.userId)
+                console.log(this.currentValue)
+            },
+
         },
         mounted(){
             this.changeTypeValue();
@@ -46,6 +57,9 @@
             prod(){
                 this.changeTypeValue();
             },
+            currentValue(){
+                this.currentValue = this.currentValue.replace(/[^0-9]/g,"")
+            }
         }
         
     }
@@ -57,6 +71,7 @@
     flex-direction: column;
     border: 2px solid $mainOne;
     padding: 25px;
+    border-radius: 5px;
     color: $accentOne;
     background: $back;
     -webkit-animation: slide-bottom-px 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
