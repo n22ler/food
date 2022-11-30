@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import store from "@/store";
 import router from "@/router"
     export default {
         data(){
@@ -39,9 +40,23 @@ import router from "@/router"
             };
             const response = await fetch("http://"+process.env.VUE_APP_API+":8000/api/auth/users/", requestOptions);
             this.errors= await response.json();
+            store.commit('auth/setUserId', this.errors.id)
+            localStorage.id = this.errors.id
             if(response.status ==201){
-                router.push('/')
-            }
+                console.log(this.errors)
+                const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({  "id": this.errors.id,
+                                        "email": this.errors.email,
+                })};
+                const response = await fetch("http://"+process.env.VUE_APP_API+":8000/api/user/"+this.errors.id+"/", requestOptions);
+                this.errors= await response.json();
+                console.log(this.errors)
+                    if(response.status ==201){
+                    router.push('/')
+                    }
+                }
             }
         }
     }

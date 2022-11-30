@@ -13,6 +13,7 @@
                         v-model="currentValue"
                         type="text"
                         name="value"
+                        maxlength="4"
                         >
                     <p></p>
                     <button @click="pushData">Записать</button>

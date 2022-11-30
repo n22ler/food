@@ -4,10 +4,11 @@ export const LoginModule = {
     state:()=>({
         login:'',
         password:'',
+        id: localStorage.getItem('id') || null,
         userId:null,
         errors:[],
         token:localStorage.getItem('token')|| null,
-        isAuth:localStorage.token|| false,
+        isAuth:localStorage.token || false,
     }),
     getters:{ //computed()
         getToken(state){
