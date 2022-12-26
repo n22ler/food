@@ -100,7 +100,7 @@ import { mapActions} from 'vuex';
         };
     },
     methods: {
-        async fetchUserData(){
+        async fetchUserData(){ //получаем данные 
             try{
                 const requestOptions = {
                     method: "GET",
@@ -121,10 +121,10 @@ import { mapActions} from 'vuex';
              if(isNaN(a)) this.bmi = "Неизвестно"
              else this.bmi = a
         },
-        changeUserParams(){
+        changeUserParams(){ // вызываем окно для изменений данных, зачем функция?
             this.changeVisible = true
         },
-        calcBaseMet(){
+        calcBaseMet(){ // расчет БОВ от пола.
             if(this.profile.sex==0){ //ж
                 return Math.round(655.1 + (9.563*parseInt(this.profile.weight)) + (1.85*parseInt(this.profile.growth)) - (4.676*parseInt(this.profile.age)))
             }
@@ -132,8 +132,7 @@ import { mapActions} from 'vuex';
                 return Math.round(66.5 + (13.75*parseInt(this.profile.weight)) + (5.003*parseInt(this.profile.growth)) - (6.775*parseInt(this.profile.age)))
             } else return 0
         },
-        async createChange(){
-
+        async createChange(){ //Сохраняем  изменения
             try{
                 const requestOptions = {
                     method: "PUT",
